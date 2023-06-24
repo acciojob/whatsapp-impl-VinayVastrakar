@@ -1,31 +1,53 @@
 package com.driver;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class WhatsappService {
-    @Autowired
+
     WhatsappRepository whatsappRepository = new WhatsappRepository();
-    public String createUser(String name, String mobile) {
+    public String createUser(String name, String mobile) throws Exception{
+        //If the mobile number exists in database, throw "User already exists" exception
+        //Otherwise, create the user and return "SUCCESS"
+
+        return whatsappRepository.createUser(name,mobile);
     }
 
     public Group createGroup(List<User> users) {
+        // The list contains at least 2 users where the first user is the admin. A group has exactly one admin.
+        // If there are only 2 users, the group is a personal chat and the group name should be kept as the name of the second user(other than admin)
+        // If there are 2+ users, the name of group should be "Group count". For example, the name of first group would be "Group 1", second would be "Group 2" and so on.
+        // Note that a personal chat is not considered a group and the count is not updated for personal chats.
+        // If group is successfully created, return group.
+
+        //For example: Consider userList1 = {Alex, Bob, Charlie}, userList2 = {Dan, Evan}, userList3 = {Felix, Graham, Hugh}.
+        //If createGroup is called for these userLists in the same order, their group names would be "Group 1", "Evan", and "Group 2" respectively.
+        return whatsappRepository.createGroup(users);
     }
 
     public int createMessage(String content) {
+        // The 'i^th' created message has message id 'i'.
+        // Return the message id.
+        return whatsappRepository.createMessage(content);
     }
 
-    public int sendMessage(Message message, User sender, Group group) {
+    public int sendMessage(Message message, User sender, Group group) throws Exception {
+        return whatsappRepository.sendMessage(message,sender,group);
     }
 
-    public String changeAdmin(User approver, User user, Group group) {
+    public String changeAdmin(User approver, User user, Group group) throws Exception {
+        return whatsappRepository.changeAdmin(approver,user,group);
     }
 
-    public int removeUser(User user) {
+    public int removeUser(User user) throws Exception {
+        return whatsappRepository.removeUser(user);
     }
 
-    public String findMessage(Date start, Date end, int k) {
+    public String findMessage(Date start, Date end, int k) throws Exception {
+        return whatsappRepository.findMessage(start,end,k);
     }
 }

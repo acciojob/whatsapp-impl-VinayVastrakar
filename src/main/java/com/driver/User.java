@@ -24,7 +24,4 @@ public class User {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
-    public User() {
-    }
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class WhatsappController {
 
     //Autowire will not work in this case, no need to change this and add autowire
-    @Autowired
     WhatsappService whatsappService = new WhatsappService();
 
     @PostMapping("/add-user")
